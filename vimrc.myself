@@ -1,0 +1,210 @@
+"=========================================================================
+" DesCRiption 适合自己使用的vimrc文件，for Linux/Windows, GUI/Console 
+"=========================================================================
+syntax on           " 语法高亮  
+set number " 显示行号
+set cursorline " 突出显示当前行
+set ruler " 打开状态栏标尺
+set autoindent	"自动缩进
+set smartindent	" 开启新行时使用智能自动缩进
+set shortmess=atI   " 启动的时候不显示那个援助乌干达儿童的提示  
+winpos 5 5          " 设定窗口位置  
+set lines=40 columns=155    " 设定窗口大小  
+set nu              " 显示行号  
+set go=             " 不要图形按钮   
+autocmd InsertLeave * se nocul  " 用浅色高亮当前行  
+autocmd InsertEnter * se cul    " 用浅色高亮当前行  
+set showcmd         " 输入的命令显示出来，看的清楚些  
+set statusline=%F%m%r%h%w\ %=\ [格式=%{&fileformat}]\ [编码=%{(&fenc==\"\"?&enc:&fenc).((exists(\"\+bomb\")\ &&\ &bomb)?\"\+B\":\"\").\"\"}]\ [语言=%Y]\ [坐标=%l,%v]\ [占比=%L\\%l\ \ %p%%]\ [时间:%{strftime(\"%Y-%m-%d\ \ %H:%M:%S\")}]   "状态行显示的内容  
+set laststatus=2    " 启动显示状态行(1),总是显示状态行(2)  
+set foldmethod=manual   " 手动折叠  
+set background=dark "背景使用黑色 
+set nocompatible  "去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限 
+"set mouse=a    "允许使用鼠标点击定位
+set ts=4
+set expandtab
+set incsearch
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set cindent
+set nobackup
+set clipboard+=unnamed
+
+"编码格式设置
+if version >= 603  " 显示中文帮助 
+	set helplang=cn
+	set encoding=utf-8
+endif
+set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
+set termencoding=utf-8
+set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,cp936
+set fileencoding=utf-8
+
+autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \     exe "normal g'\"" |
+    \ endif
+let mapleader=","
+set hlsearch " 搜索时高亮显示被找到的文本
+set showmatch " 插入括号时，短暂地跳转到匹配的对应括号
+set matchtime=2 " 短暂跳转到匹配括号的时间
+
+"窗口分割时,进行切换的按键热键需要连接两次,比如从下方窗口移动
+"光标到上方窗口,需要<c-w><c-w>k,非常麻烦,现在重映射为<c-k>,切换的
+"时候会变得非常方便.
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+"一些不错的映射转换语法（如果在一个文件中混合了不同语言时有用）
+nnoremap <leader>1 :set filetype=xhtml<CR>
+nnoremap <leader>2 :set filetype=css<CR>
+nnoremap <leader>3 :set filetype=javascript<CR>
+nnoremap <leader>4 :set filetype=php<CR>
+
+" Python 文件的一般设置
+filetype plugin on  " python代码补全begin 
+let g:pydiction_location = '~/.vim/tools/pydiction/complete-dict'
+let g:pydiction_menu_height = 3 " python代码补全begin 
+
+nnoremap <space> :
+vnoremap <space> :
+inoremap <C-h> <Esc><C-W>h
+inoremap <C-j> <Esc><C-W>j
+inoremap <C-k> <Esc><C-W>k
+inoremap <C-l> <Esc><C-W>l
+let OpenDir=system("pwd")
+nmap <silent> <leader>cd :exe 'cd ' . OpenDir<cr>:pwd<cr>
+let g:Tlist_Auto_Update=1
+let g:Tlist_Process_File_Always=1
+let g:Tlist_Exit_OnlyWindow=1
+let g:Tlist_Show_One_File=1
+let g:Tlist_WinWidth=25
+let g:Tlist_Enable_Fold_Column=0
+let g:Tlist_Auto_Highlight_Tag=1
+let g:NERDTreeWinPos="right"
+let g:NERDTreeWinSize=25
+let g:NERDTreeShowLineNumbers=1
+let g:NERDTreeQuitOnOpen=1
+if has("cscope")
+    set csto=1
+    set cst
+    set nocsverb
+    if filereadable("cscope.out")
+        cs add cscope.out
+    endif
+    set csverb
+endif
+let g:OmniCpp_DefaultNamespaces=["std"]
+let g:OmniCpp_MayCompleteScope=1
+let g:OmniCpp_SelectFirstItem=2
+if has("gdb")
+    set asm=0
+    let g:vimgdb_debug_file=""
+    run macros/gdb_mappings.vim
+endif
+let g:LookupFile_TagExpr='"./tags.filename"'
+let g:LookupFile_MinPatLength=2
+let g:LookupFile_PreserveLastPattern=0
+let g:LookupFile_PreservePatternHistory=1
+let g:LookupFile_AlwaysAcceptFirst=1
+let g:LookupFile_AllowNewFiles=0
+source $VIMRUNTIME/ftplugin/man.vim
+let g:snips_author="dengfei"
+let g:snips_email="dengfei@360humi.com"
+let g:snips_copyright="SicMicro, Inc"
+function! RunShell(Msg, Shell)
+    echo a:Msg . '...'
+    call system(a:Shell)
+    echon 'done'
+endfunction
+nmap  <F2> :TlistToggle<cr>
+nmap  <F3> :NERDTreeToggle<cr>
+nmap  <F4> :MRU<cr>
+nmap  <F5> <Plug>LookupFile<cr>
+nmap  <F6> :vimgrep /<C-R>=expand("<cword>")<cr>/ **/*.c **/*.h<cr><C-o>:cw<cr>
+nmap  <F9> :call RunShell("Generate tags", "ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .")<cr>
+nmap <F10> :call HLUDSync()<cr>
+nmap <F11> :call RunShell("Generate filename tags", "~/.vim/shell/genfiletags.sh")<cr>
+nmap <F12> :call RunShell("Generate cscope", "cscope -Rb")<cr>:cs add cscope.out<cr>
+nmap <leader>sa :cs add cscope.out<cr>
+nmap <leader>ss :cs find s <C-R>=expand("<cword>")<cr><cr>
+nmap <leader>sg :cs find g <C-R>=expand("<cword>")<cr><cr>
+nmap <leader>sc :cs find c <C-R>=expand("<cword>")<cr><cr>
+nmap <leader>st :cs find t <C-R>=expand("<cword>")<cr><cr>
+nmap <leader>se :cs find e <C-R>=expand("<cword>")<cr><cr>
+nmap <leader>sf :cs find f <C-R>=expand("<cfile>")<cr><cr>
+nmap <leader>si :cs find i <C-R>=expand("<cfile>")<cr><cr>
+nmap <leader>sd :cs find d <C-R>=expand("<cword>")<cr><cr>
+nmap <leader>zz <C-w>o
+nmap <leader>gs :GetScripts<cr>
+
+autocmd BufNewFile *.cpp,*.[ch],*.py,*.sh,*.java exec ":call SetTitle()"
+func SetTitle()
+    if &filetype == 'sh'
+        call setline(1,"\#########################################################################")
+        call append(line("."), "\# File Name: ".expand("%"))
+        call append(line(".")+1, "\# Author: dengfei")
+        call append(line(".")+2, "\# mail: dengfei@360humi.com")
+        call append(line(".")+3, "\# Created Time:".strftime("%c"))
+        call append(line(".")+4,"\#########################################################################")
+        call append(line(".")+5, "\#!/bin/bash")
+        call append(line(".")+6, "")
+    endif
+    if &filetype == 'py'
+	    call setline(1,"\###################################################################")
+	    call append(line("."), "\# File Name: ".expand("%"))
+        call append(line(".")+1, "\# Author: dengfei")
+        call append(line(".")+2, "\# mail: dengfei@360humi.com")
+	    call append(line(".")+3, "\# Created Time: ".strftime("%c"))
+	    call append(line(".")+4, "\#=============================================================")
+	    call append(line(".")+5, "\#!/usr/bin/python")
+        call append(line(".")+6, "\# -*- coding:UTF-8 -*-")
+        call append(line(".")+7, "")
+        call append(line(".")+8, "import time")
+        call append(line(".")+9, "import sys")
+        call append(line(".")+10, "reload(sys)")
+        call append(line(".")+11, "sys.setdefaultencoding('utf8')")
+	endif
+    if &filetype == 'cpp'
+        call setline(1, "/*************************************************************************")
+        call append(line("."), "    > File Name: ".expand("%"))
+        call append(line(".")+1, "    > Author: dengfei")
+        call append(line(".")+2, "    > Mail: dengfei@360humi.com ")
+        call append(line(".")+3, "    > Created Time: ".strftime("%c"))
+        call append(line(".")+4," ************************************************************************/")
+        call append(line(".")+5, "")      
+        call append(line(".")+6, "#include <iostream>")
+        call append(line(".")+7, "")
+        call append(line(".")+8, "using namespace std;")
+        call append(line(".")+9, "")
+        call append(line(".")+10, "int main(void){")
+        call append(line(".")+11, "")
+        call append(line(".")+12, "    return 0;")
+        call append(line(".")+13, "}")
+    endif
+    if &filetype == 'c'
+        call setline(1, "/*************************************************************************")
+        call append(line("."), "    > File Name: ".expand("%"))
+        call append(line(".")+1, "    > Author: dengfei")
+        call append(line(".")+2, "    > Mail: dengfei@360humi.com ")
+        call append(line(".")+3, "    > Created Time: ".strftime("%c"))
+        call append(line(".")+4," ************************************************************************/")
+        call append(line(".")+5, "")      
+        call append(line(".")+6, "#include <stdio.h>")
+        call append(line(".")+7, "")
+        call append(line(".")+8, "int main(void){")
+        call append(line(".")+9, "")
+        call append(line(".")+10,"    return 0;")
+        call append(line(".")+11, "}")
+    endif
+    autocmd BufNewFile *normal G
+endfunc
+
+"括号匹配补全
+inoremap ( ()<Esc>  
+
+

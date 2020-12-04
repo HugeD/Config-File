@@ -1,0 +1,23 @@
+更新代码到远端仓库：
+
+git checkout temp --切换到temp分支
+git checkout -b temp --创建并切换到temp分支
+
+git status 查看当前状态 
+git branch -a 查看所有的分支
+git branch 查看本地所有分支
+git branch -r 查看远程所有分支
+
+git status
+git add Daemon.py
+git commit -m "2020-11-11 HugeD edit sensor collect data code" --提交并且加注释
+git push origin temp --将本地的temp分支推送到远程主机origin上的对应temp分支,将文件给推到服务器上 
+git checkout main
+git merge temp --把远程下载下来的代码合并到本地仓库，远程的和本地的合并
+git push
+
+
+git log --看你commit的日志
+
+从仓库下拉最新代码：
+git pull
